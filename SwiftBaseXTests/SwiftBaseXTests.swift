@@ -22,11 +22,11 @@ class SwiftBaseXTests: XCTestCase {
     }
     
     func testHexEncode() {
-        XCTAssertEqual(encode(alpha:HEX, data:"hello".data(using: String.Encoding.utf8)!), "68656c6c6f")
+        XCTAssertEqual(encodeAlpha(HEX, data:"hello".data(using: String.Encoding.utf8)!), "68656c6c6f")
     }
 
     func testBase58Encode() {
-        XCTAssertEqual(encode(alpha:BASE58, data:"hello".data(using: String.Encoding.utf8)!), "Cn8eVZg")
+        XCTAssertEqual(encodeAlpha(BASE58, data:"hello".data(using: String.Encoding.utf8)!), "Cn8eVZg")
     }
 
     func testHexEncodeExtension() {
@@ -41,23 +41,23 @@ class SwiftBaseXTests: XCTestCase {
     }
     
     func testHexDecode() {
-        XCTAssertEqual(try! decode(alpha:HEX, data:"68656c6c6f"), "hello".data(using: String.Encoding.utf8)!)
+        XCTAssertEqual(try! decodeAlpha(HEX, data:"68656c6c6f"), "hello".data(using: String.Encoding.utf8)!)
     }
 
     func testHexDecodeInvalid() {
-        XCTAssertThrowsError(try decode(alpha:HEX, data:"68656c6c6g"))
-        XCTAssertThrowsError(try decode(alpha:HEX, data:"68656c6c6f "))
-        XCTAssertThrowsError(try decode(alpha:HEX, data:" 68656c6c6f"))
+        XCTAssertThrowsError(try decodeAlpha(HEX, data:"68656c6c6g"))
+        XCTAssertThrowsError(try decodeAlpha(HEX, data:"68656c6c6f "))
+        XCTAssertThrowsError(try decodeAlpha(HEX, data:" 68656c6c6f"))
     }
     
     func testBase58Decode() {
-        XCTAssertEqual(try! decode(alpha:BASE58, data:"Cn8eVZg"), "hello".data(using: String.Encoding.utf8)!)
+        XCTAssertEqual(try! decodeAlpha(BASE58, data:"Cn8eVZg"), "hello".data(using: String.Encoding.utf8)!)
     }
 
     func testBsse58DecodeInvalid() {
-        XCTAssertThrowsError(try decode(alpha:BASE58, data:"Cn8eVZg=="))
-        XCTAssertThrowsError(try decode(alpha:BASE58, data:"Cn8eVZg "))
-        XCTAssertThrowsError(try decode(alpha:BASE58, data:" Cn8eVZg"))
+        XCTAssertThrowsError(try decodeAlpha(BASE58, data:"Cn8eVZg=="))
+        XCTAssertThrowsError(try decodeAlpha(BASE58, data:"Cn8eVZg "))
+        XCTAssertThrowsError(try decodeAlpha(BASE58, data:" Cn8eVZg"))
     }
 
     func testHexDecodeExtension() {

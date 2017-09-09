@@ -30,7 +30,7 @@ public enum BaseXError: Error {
     case invalidCharacter
 }
 
-public func encode (alpha:(map:[Character:UInt], indexed:[Character], base: UInt, leader: Character), data: Data) -> String {
+public func encodeAlpha(_ alpha: (map:[Character:UInt], indexed:[Character], base: UInt, leader: Character), data: Data) -> String {
     if data.count == 0 {
         return ""
     }
@@ -68,7 +68,7 @@ public func encode (alpha:(map:[Character:UInt], indexed:[Character], base: UInt
     return final
 }
 
-public func decode (alpha:(map:[Character:UInt], indexed:[Character], base: UInt, leader: Character), data: String) throws -> Data  {
+public func decodeAlpha(_ alpha: (map:[Character:UInt], indexed:[Character], base: UInt, leader: Character), data: String) throws -> Data  {
     if data.isEmpty {
         return Data()
     }
@@ -116,7 +116,7 @@ func strip0x(_ hex: String) -> String {
 
 public extension Data {
     public func hexEncodedString(_ prefixed: Bool = false) -> String {
-        let encoded = SwiftBaseX.encode(alpha:HEX, data: self)
+        let encoded = SwiftBaseX.encodeAlpha(HEX, data: self)
         if prefixed {
             return "0x".appending(encoded)
         }
@@ -133,13 +133,13 @@ public extension Data {
     }
 
     public func base58EncodedString() -> String {
-        return SwiftBaseX.encode(alpha:BASE58, data: self)
+        return SwiftBaseX.encodeAlpha(BASE58, data: self)
     }
 }
 
 public extension String {
     public func decodeHex() throws -> Data {
-        return try decode(alpha:HEX, data: strip0x(self))
+        return try decodeAlpha(HEX, data: strip0x(self))
     }
     
     public func decodeFullHex() throws -> Data {
@@ -156,7 +156,7 @@ public extension String {
     }
     
     public func decodeBase58() throws -> Data {
-        return try decode(alpha:BASE58, data: self)
+        return try decodeAlpha(BASE58, data: self)
     }
 }
 
